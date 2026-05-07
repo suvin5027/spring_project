@@ -6,7 +6,10 @@ import com.colar.spring_project.dto.UserDTO;
 
 @Mapper
 public interface UserMapper {
+	// 로그인
 	UserDTO login(UserDTO userDto);
+	// 회원가입
 	int register(UserDTO userDto);
+	// 아이디로 회원 조회
 	UserDTO findByUserId(String userId);
 }

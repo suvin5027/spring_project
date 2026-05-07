@@ -42,6 +42,7 @@ src/main/resources/application-*.properties
 
 ### 작업 관리 ###
 tickets/
+git_commits/
 CLAUDE.md
 
 ### 로그 ###

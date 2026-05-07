@@ -18,6 +18,7 @@ public class UserController {
 
 	private final UserService userService;
 
+	// 로그인
 	@PostMapping("/login")
 	public ResponseEntity<UserDTO> login(@RequestBody UserDTO userDto) {
 		UserDTO result = userService.login(userDto);
@@ -25,6 +26,7 @@ public class UserController {
 		return ResponseEntity.ok(result);
 	}
 
+	// 회원가입
 	@PostMapping("/register")
 	public ResponseEntity<Integer> register(@RequestBody UserDTO userDto) {
 		int result = userService.register(userDto);
