@@ -35,3 +35,19 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### 민감 정보 ###
+src/main/resources/application.properties
+src/main/resources/application-*.properties
+
+### 작업 관리 ###
+tickets/
+CLAUDE.md
+
+### 로그 ###
+*.log
+logs/
+
+### OS ###
+.DS_Store
+Thumbs.db
