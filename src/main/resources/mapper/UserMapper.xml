@@ -4,12 +4,11 @@
 
 <mapper namespace="com.colar.spring_project.mapper.UserMapper">
 
-	<!-- 로그인 -->
+	<!-- 로그인 — 아이디로 조회 후 Java에서 비밀번호 비교 -->
 	<select id="login" parameterType="com.colar.spring_project.dto.UserDTO" resultType="com.colar.spring_project.dto.UserDTO">
-		SELECT USER_SEQ, USER_ID, USER_NAME, NICKNAME, USER_ROLE
+		SELECT USER_SEQ, USER_ID, USER_NAME, NICKNAME, USER_ROLE, PASSWORD
 		FROM TB_USER
 		WHERE USER_ID = #{userId}
-		AND PASSWORD = #{password}
 	</select>
 
 	<!-- 회원가입 -->
