@@ -14,6 +14,8 @@ public class BoardDTO {
 	private String author;		// 작성자 닉네임 (JOIN)
 	private String createdAt;	// 등록일시
 
+	private Integer hasAttachment;	// 첨부파일 여부 (0/1)
+
 	// 검색용 파라미터
 	private String searchType;	// 검색 유형 (title/content/author)
 	private String keyword;		// 검색어
