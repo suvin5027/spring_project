@@ -5,7 +5,7 @@
 <mapper namespace="com.colar.spring_project.mapper.BoardMapper">
 
 	<!-- 목록 조회 — 공지 상단 고정, 최신순 정렬, 검색 조건 포함 -->
-	<select id="getList" parameterType="com.colar.spring_project.dto.BoardDTO" resultType="com.colar.spring_project.dto.BoardDTO">
+	<select id="getList" parameterType="BoardDTO" resultType="BoardDTO">
 		SELECT
 			B.BOARD_SEQ,
 			B.USER_SEQ,
@@ -42,7 +42,7 @@
 	</select>
 
 	<!-- 단건 조회 -->
-	<select id="getDetail" parameterType="Long" resultType="com.colar.spring_project.dto.BoardDTO">
+	<select id="getDetail" parameterType="Long" resultType="BoardDTO">
 		SELECT
 			B.BOARD_SEQ,
 			B.USER_SEQ,
@@ -59,13 +59,13 @@
 	</select>
 
 	<!-- 등록 -->
-	<insert id="insert" parameterType="com.colar.spring_project.dto.BoardDTO" useGeneratedKeys="true" keyProperty="boardSeq">
+	<insert id="insert" parameterType="BoardDTO" useGeneratedKeys="true" keyProperty="boardSeq">
 		INSERT INTO TB_BOARD (USER_SEQ, CATEGORY, TITLE, CONTENT)
 		VALUES (#{userSeq}, #{category}, #{title}, #{content})
 	</insert>
 
 	<!-- 수정 -->
-	<update id="update" parameterType="com.colar.spring_project.dto.BoardDTO">
+	<update id="update" parameterType="BoardDTO">
 		UPDATE TB_BOARD
 		SET
 			CATEGORY   = #{category},
