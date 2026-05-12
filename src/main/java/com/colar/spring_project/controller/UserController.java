@@ -40,4 +40,20 @@ public class UserController {
 		if (!result) return ResponseEntity.status(400).build();
 		return ResponseEntity.ok().build();
 	}
+
+	// 아이디 찾기 — 이름 + 이메일로 조회
+	@PostMapping("/find-id")
+	public ResponseEntity<String> findId(@RequestBody UserDTO userDto) {
+		String userId = userService.findId(userDto);
+		if (userId == null) return ResponseEntity.status(404).build();
+		return ResponseEntity.ok(userId);
+	}
+
+	// 비밀번호 재설정 — 아이디 + 이메일로 본인 확인 후 변경
+	@PostMapping("/reset-password")
+	public ResponseEntity<Void> resetPassword(@RequestBody UserDTO userDto) {
+		boolean result = userService.resetPassword(userDto);
+		if (!result) return ResponseEntity.status(404).build();
+		return ResponseEntity.ok().build();
+	}
 }

@@ -12,4 +12,8 @@ public interface UserMapper {
 	int register(UserDTO userDto);
 	// 아이디로 회원 조회
 	UserDTO findByUserId(String userId);
+	// 이름 + 이메일로 아이디 찾기
+	String findIdByNameAndEmail(UserDTO userDto);
+	// 아이디 + 이메일로 회원 존재 확인 후 비밀번호 변경
+	int updatePasswordByIdAndEmail(UserDTO userDto);
 }

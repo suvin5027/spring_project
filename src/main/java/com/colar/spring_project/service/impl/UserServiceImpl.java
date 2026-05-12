@@ -44,4 +44,17 @@ public class UserServiceImpl implements UserService {
 		if (found == null) return false;
 		return passwordEncoder.matches(userDto.getPassword(), found.getPassword());
 	}
+
+	// 아이디 찾기 — 이름 + 이메일 일치 시 아이디 반환
+	@Override
+	public String findId(UserDTO userDto) {
+		return userMapper.findIdByNameAndEmail(userDto);
+	}
+
+	// 비밀번호 재설정 — 아이디 + 이메일 일치 시 새 비밀번호로 변경
+	@Override
+	public boolean resetPassword(UserDTO userDto) {
+		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		return userMapper.updatePasswordByIdAndEmail(userDto) > 0;
+	}
 }

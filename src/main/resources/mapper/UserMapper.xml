@@ -24,4 +24,20 @@
 		WHERE USER_ID = #{userId}
 	</select>
 
+	<!-- 아이디 찾기 — 이름 + 이메일 일치 시 아이디 반환 -->
+	<select id="findIdByNameAndEmail" parameterType="com.colar.spring_project.dto.UserDTO" resultType="String">
+		SELECT USER_ID
+		FROM TB_USER
+		WHERE USER_NAME = #{userName}
+		AND EMAIL = #{email}
+	</select>
+
+	<!-- 비밀번호 재설정 — 아이디 + 이메일 일치 시 비밀번호 변경 -->
+	<update id="updatePasswordByIdAndEmail" parameterType="com.colar.spring_project.dto.UserDTO">
+		UPDATE TB_USER
+		SET PASSWORD = #{password}
+		WHERE USER_ID = #{userId}
+		AND EMAIL = #{email}
+	</update>
+
 </mapper>
