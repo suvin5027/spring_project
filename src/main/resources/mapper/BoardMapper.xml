@@ -61,8 +61,8 @@
 
 	<!-- 등록 -->
 	<insert id="insert" parameterType="BoardDTO" useGeneratedKeys="true" keyProperty="boardSeq">
-		INSERT INTO TB_BOARD (USER_SEQ, CATEGORY, TITLE, CONTENT)
-		VALUES (#{userSeq}, #{category}, #{title}, #{content})
+		INSERT INTO TB_BOARD (USER_SEQ, CATEGORY, TITLE, CONTENT, IS_SECRET)
+		VALUES (#{userSeq}, #{category}, #{title}, #{content}, #{isSecret})
 	</insert>
 
 	<!-- 수정 -->
@@ -71,7 +71,8 @@
 		SET
 			CATEGORY   = #{category},
 			TITLE      = #{title},
-			CONTENT    = #{content}
+			CONTENT    = #{content},
+			IS_SECRET  = #{isSecret}
 		WHERE BOARD_SEQ = #{boardSeq}
 	</update>
 

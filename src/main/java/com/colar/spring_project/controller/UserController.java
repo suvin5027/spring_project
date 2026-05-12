@@ -32,4 +32,12 @@ public class UserController {
 		int result = userService.register(userDto);
 		return ResponseEntity.ok(result);
 	}
+
+	// 비밀번호 검증 — 비밀글 열람 시 본인 확인용
+	@PostMapping("/verify-password")
+	public ResponseEntity<Void> verifyPassword(@RequestBody UserDTO userDto) {
+		boolean result = userService.verifyPassword(userDto);
+		if (!result) return ResponseEntity.status(400).build();
+		return ResponseEntity.ok().build();
+	}
 }

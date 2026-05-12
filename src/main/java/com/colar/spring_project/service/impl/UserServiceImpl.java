@@ -36,4 +36,12 @@ public class UserServiceImpl implements UserService {
 	public UserDTO findByUserId(String userId) {
 		return userMapper.findByUserId(userId);
 	}
+
+	// 비밀번호 검증 — userId로 조회 후 BCrypt 비교
+	@Override
+	public boolean verifyPassword(UserDTO userDto) {
+		UserDTO found = userMapper.login(userDto);
+		if (found == null) return false;
+		return passwordEncoder.matches(userDto.getPassword(), found.getPassword());
+	}
 }
