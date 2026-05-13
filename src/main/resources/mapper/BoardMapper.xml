@@ -81,4 +81,9 @@
 		DELETE FROM TB_BOARD WHERE BOARD_SEQ = #{boardSeq}
 	</delete>
 
+	<!-- 조회수 +1 -->
+	<update id="incrementViewCount" parameterType="Long">
+		UPDATE TB_BOARD SET VIEW_COUNT = VIEW_COUNT + 1 WHERE BOARD_SEQ = #{boardSeq}
+	</update>
+
 </mapper>

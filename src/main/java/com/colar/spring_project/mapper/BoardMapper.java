@@ -18,4 +18,6 @@ public interface BoardMapper {
 	int update(BoardDTO boardDto);
 	// 삭제
 	int delete(Long boardSeq);
+	// 조회수 +1
+	int incrementViewCount(Long boardSeq);
 }

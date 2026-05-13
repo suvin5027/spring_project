@@ -44,4 +44,10 @@ public class BoardServiceImpl implements BoardService {
 	public int delete(Long boardSeq) {
 		return boardMapper.delete(boardSeq);
 	}
+
+	// 조회수 +1
+	@Override
+	public int incrementViewCount(Long boardSeq) {
+		return boardMapper.incrementViewCount(boardSeq);
+	}
 }

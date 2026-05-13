@@ -59,4 +59,11 @@ public class BoardController {
 		boardService.delete(boardSeq);
 		return ResponseEntity.ok().build();
 	}
+
+	// 조회수 +1
+	@PutMapping("/{boardSeq}/view")
+	public ResponseEntity<Void> incrementViewCount(@PathVariable Long boardSeq) {
+		boardService.incrementViewCount(boardSeq);
+		return ResponseEntity.ok().build();
+	}
 }

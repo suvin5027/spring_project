@@ -10,4 +10,5 @@ public interface BoardService {
 	int insert(BoardDTO boardDto);
 	int update(BoardDTO boardDto);
 	int delete(Long boardSeq);
+	int incrementViewCount(Long boardSeq);
 }
