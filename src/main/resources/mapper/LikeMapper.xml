@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.colar.spring_project.mapper.LikeMapper">
+
+	<!-- 좋아요 수 조회 -->
+	<select id="getLikeCount" parameterType="Long" resultType="int">
+		SELECT COUNT(*) FROM TB_BOARD_LIKE WHERE BOARD_SEQ = #{boardSeq}
+	</select>
+
+	<!-- 오늘 좋아요 여부 조회 (1: 오늘 이미 눌렀음, 0: 아직 안 눌렀음) -->
+	<select id="isLikedToday" parameterType="LikeDTO" resultType="int">
+		SELECT COUNT(*) FROM TB_BOARD_LIKE
+		WHERE BOARD_SEQ = #{boardSeq} AND USER_SEQ = #{userSeq}
+		AND DATE(CREATED_AT) = CURDATE()
+	</select>
+
+	<!-- 좋아요 등록 -->
+	<insert id="insert" parameterType="LikeDTO">
+		INSERT INTO TB_BOARD_LIKE (BOARD_SEQ, USER_SEQ)
+		VALUES (#{boardSeq}, #{userSeq})
+	</insert>
+
+</mapper>
