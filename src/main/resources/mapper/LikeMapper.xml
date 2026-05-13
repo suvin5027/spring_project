@@ -9,11 +9,15 @@
 		SELECT COUNT(*) FROM TB_BOARD_LIKE WHERE BOARD_SEQ = #{boardSeq}
 	</select>
 
-	<!-- 오늘 좋아요 여부 조회 (1: 오늘 이미 눌렀음, 0: 아직 안 눌렀음) -->
+	<!-- 1시간 내 좋아요 여부 조회 (1: 제한 시간 내 눌렀음, 0: 아직 안 눌렀음) -->
+	<!-- 간격 변경: INTERVAL 숫자 단위 -->
+	<!--   30분  : INTERVAL 30 MINUTE / 예시) AND CREATED_AT >= NOW() - INTERVAL 30 MINUTE  -->
+	<!--   1시간 : INTERVAL 1 HOUR    / 예시) AND CREATED_AT >= NOW() - INTERVAL 1 HOUR     -->
+	<!--   1일   : INTERVAL 1 DAY     / 예시) AND CREATED_AT >= NOW() - INTERVAL 1 DAY      -->
 	<select id="isLikedToday" parameterType="LikeDTO" resultType="int">
 		SELECT COUNT(*) FROM TB_BOARD_LIKE
 		WHERE BOARD_SEQ = #{boardSeq} AND USER_SEQ = #{userSeq}
-		AND DATE(CREATED_AT) = CURDATE()
+		AND CREATED_AT >= NOW() - INTERVAL 1 HOUR
 	</select>
 
 	<!-- 좋아요 등록 -->
