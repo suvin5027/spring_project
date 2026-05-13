@@ -1,8 +1,10 @@
 package com.colar.spring_project.controller;
 
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -59,5 +61,24 @@ public class AtchFileController {
 	public ResponseEntity<Void> delete(@PathVariable Long fileSeq) throws Exception {
 		atchFileService.delete(fileSeq);
 		return ResponseEntity.ok().build();
+	}
+
+	// 에디터 이미지 업로드 — 저장 후 접근 URL 반환
+	@PostMapping("/image")
+	public ResponseEntity<Map<String, String>> uploadImage(
+			@RequestParam MultipartFile image) throws Exception {
+		String url = atchFileService.uploadImage(image);
+		return ResponseEntity.ok(Map.of("url", url));
+	}
+
+	// 에디터 이미지 서빙 — img 태그에서 직접 접근하므로 inline으로 반환
+	@GetMapping("/image/{savedName}")
+	public ResponseEntity<Resource> serveImage(@PathVariable String savedName) throws Exception {
+		Resource resource = atchFileService.serveImage(savedName);
+		String contentType = URLConnection.guessContentTypeFromName(savedName);
+		if (contentType == null) contentType = "application/octet-stream";
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_TYPE, contentType)
+				.body(resource);
 	}
 }

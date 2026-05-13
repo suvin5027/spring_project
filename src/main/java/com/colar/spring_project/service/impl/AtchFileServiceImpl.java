@@ -81,4 +81,26 @@ public class AtchFileServiceImpl implements AtchFileService {
 			atchFileMapper.deleteByFileSeq(fileSeq);
 		}
 	}
+
+	// 에디터 이미지 업로드 — UUID 저장 후 접근 경로 반환
+	@Override
+	public String uploadImage(MultipartFile image) throws Exception {
+		File dir = new File(uploadPath);
+		if (!dir.exists()) dir.mkdirs();
+
+		String originalName = image.getOriginalFilename();
+		String ext = originalName.substring(originalName.lastIndexOf("."));
+		String savedName = UUID.randomUUID().toString() + ext;
+
+		image.transferTo(new File(uploadPath + File.separator + savedName));
+
+		return "/api/files/image/" + savedName;
+	}
+
+	// 에디터 이미지 서빙 — 저장된 파일을 Resource로 반환
+	@Override
+	public Resource serveImage(String savedName) throws Exception {
+		Path path = Paths.get(uploadPath).resolve(savedName);
+		return new UrlResource(path.toUri());
+	}
 }

@@ -13,4 +13,6 @@ public interface AtchFileService {
 	Resource download(Long fileSeq) throws Exception;
 	AtchFileDTO getFileInfo(Long fileSeq);
 	void delete(Long fileSeq) throws Exception;
+	String uploadImage(MultipartFile image) throws Exception;
+	Resource serveImage(String savedName) throws Exception;
 }
