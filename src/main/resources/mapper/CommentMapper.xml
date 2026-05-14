@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.colar.spring_project.mapper.CommentMapper">
+
+	<!-- 게시글 전체 댓글 목록 — 부모 순서대로 그룹핑 후 등록순 정렬 -->
+	<select id="getList" resultType="CommentDTO">
+		SELECT
+			COMMENT_SEQ  AS commentSeq,
+			BOARD_SEQ    AS boardSeq,
+			USER_SEQ     AS userSeq,
+			AUTHOR       AS author,
+			CONTENT      AS content,
+			PARENT_SEQ   AS parentSeq,
+			DEPTH        AS depth,
+			IS_DELETED   AS deleted,
+			IS_SECRET    AS secret,
+			DATE_FORMAT(CREATED_AT, '%Y/%m/%d %H:%i') AS createdAt
+		FROM TB_COMMENT
+		WHERE BOARD_SEQ = #{boardSeq}
+		ORDER BY COALESCE(PARENT_SEQ, COMMENT_SEQ), COMMENT_SEQ
+	</select>
+
+	<!-- 댓글 단건 조회 -->
+	<select id="findById" resultType="CommentDTO">
+		SELECT
+			COMMENT_SEQ  AS commentSeq,
+			BOARD_SEQ    AS boardSeq,
+			USER_SEQ     AS userSeq,
+			AUTHOR       AS author,
+			CONTENT      AS content,
+			PARENT_SEQ   AS parentSeq,
+			DEPTH        AS depth,
+			IS_DELETED   AS deleted,
+			IS_SECRET    AS secret,
+			DATE_FORMAT(CREATED_AT, '%Y/%m/%d %H:%i') AS createdAt
+		FROM TB_COMMENT
+		WHERE COMMENT_SEQ = #{commentSeq}
+	</select>
+
+	<!-- 댓글 등록 -->
+	<insert id="insert" parameterType="CommentDTO">
+		INSERT INTO TB_COMMENT (BOARD_SEQ, USER_SEQ, AUTHOR, CONTENT, PARENT_SEQ, DEPTH, IS_SECRET)
+		VALUES (#{boardSeq}, #{userSeq}, #{author}, #{content}, #{parentSeq}, #{depth}, #{secret})
+	</insert>
+
+	<!-- 댓글 수정 (내용만) -->
+	<update id="update" parameterType="CommentDTO">
+		UPDATE TB_COMMENT
+		SET CONTENT = #{content}
+		WHERE COMMENT_SEQ = #{commentSeq}
+	</update>
+
+	<!-- soft delete — IS_DELETED = 1 -->
+	<update id="softDelete">
+		UPDATE TB_COMMENT SET IS_DELETED = 1 WHERE COMMENT_SEQ = #{commentSeq}
+	</update>
+
+	<!-- hard delete — 완전 삭제 -->
+	<delete id="hardDelete">
+		DELETE FROM TB_COMMENT WHERE COMMENT_SEQ = #{commentSeq}
+	</delete>
+
+	<!-- 대댓글 존재 여부 -->
+	<select id="hasChildren" resultType="int">
+		SELECT COUNT(*) FROM TB_COMMENT WHERE PARENT_SEQ = #{commentSeq}
+	</select>
+
+	<!-- 게시글 댓글 수 (삭제된 댓글 포함 — 목록에 표시할 전체 수) -->
+	<select id="getCommentCount" resultType="int">
+		SELECT COUNT(*) FROM TB_COMMENT WHERE BOARD_SEQ = #{boardSeq}
+	</select>
+
+</mapper>
