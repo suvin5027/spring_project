@@ -8,5 +8,5 @@ public interface CommentService {
 	List<CommentDTO> getList(Long boardSeq);
 	CommentDTO insert(CommentDTO dto);
 	CommentDTO update(CommentDTO dto);
-	void delete(Long commentSeq);
+	void delete(Long commentSeq, String deletedBy);
 }

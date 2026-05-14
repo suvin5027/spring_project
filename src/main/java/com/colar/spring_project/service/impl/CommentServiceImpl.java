@@ -36,11 +36,11 @@ public class CommentServiceImpl implements CommentService {
 		return commentMapper.findById(dto.getCommentSeq());
 	}
 
-	// 댓글 삭제 — 대댓글 있으면 soft delete, 없으면 hard delete
+	// 댓글 삭제 — 관리자가 남의 댓글 삭제 시 무조건 soft delete, 그 외엔 대댓글 여부로 판단
 	@Override
-	public void delete(Long commentSeq) {
-		if (commentMapper.hasChildren(commentSeq) > 0) {
-			commentMapper.softDelete(commentSeq);
+	public void delete(Long commentSeq, String deletedBy) {
+		if ("ADMIN".equals(deletedBy) || commentMapper.hasChildren(commentSeq) > 0) {
+			commentMapper.softDelete(commentSeq, deletedBy);
 		} else {
 			commentMapper.hardDelete(commentSeq);
 		}

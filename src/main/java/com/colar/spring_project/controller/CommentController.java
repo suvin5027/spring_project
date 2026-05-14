@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.colar.spring_project.dto.CommentDTO;
@@ -53,8 +54,9 @@ public class CommentController {
 	@DeleteMapping("/{boardSeq}/comments/{commentSeq}")
 	public ResponseEntity<Void> delete(
 			@PathVariable Long boardSeq,
-			@PathVariable Long commentSeq) {
-		commentService.delete(commentSeq);
+			@PathVariable Long commentSeq,
+			@RequestParam(defaultValue = "USER") String deletedBy) {
+		commentService.delete(commentSeq, deletedBy);
 		return ResponseEntity.ok().build();
 	}
 }

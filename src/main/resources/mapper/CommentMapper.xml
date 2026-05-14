@@ -15,6 +15,7 @@
 			PARENT_SEQ   AS parentSeq,
 			DEPTH        AS depth,
 			IS_DELETED   AS deleted,
+			DELETED_BY   AS deletedBy,
 			IS_SECRET    AS secret,
 			DATE_FORMAT(CREATED_AT, '%Y/%m/%d %H:%i') AS createdAt
 		FROM TB_COMMENT
@@ -33,6 +34,7 @@
 			PARENT_SEQ   AS parentSeq,
 			DEPTH        AS depth,
 			IS_DELETED   AS deleted,
+			DELETED_BY   AS deletedBy,
 			IS_SECRET    AS secret,
 			DATE_FORMAT(CREATED_AT, '%Y/%m/%d %H:%i') AS createdAt
 		FROM TB_COMMENT
@@ -52,9 +54,9 @@
 		WHERE COMMENT_SEQ = #{commentSeq}
 	</update>
 
-	<!-- soft delete — IS_DELETED = 1 -->
+	<!-- soft delete — IS_DELETED = 1, DELETED_BY = 삭제 주체 -->
 	<update id="softDelete">
-		UPDATE TB_COMMENT SET IS_DELETED = 1 WHERE COMMENT_SEQ = #{commentSeq}
+		UPDATE TB_COMMENT SET IS_DELETED = 1, DELETED_BY = #{deletedBy} WHERE COMMENT_SEQ = #{commentSeq}
 	</update>
 
 	<!-- hard delete — 완전 삭제 -->

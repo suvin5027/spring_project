@@ -22,7 +22,7 @@ public interface CommentMapper {
 	int update(CommentDTO dto);
 
 	// soft delete — 대댓글 있을 때 "삭제된 댓글입니다" 표시
-	int softDelete(@Param("commentSeq") Long commentSeq);
+	int softDelete(@Param("commentSeq") Long commentSeq, @Param("deletedBy") String deletedBy);
 
 	// hard delete — 대댓글 없을 때 완전 삭제
 	int hardDelete(@Param("commentSeq") Long commentSeq);
