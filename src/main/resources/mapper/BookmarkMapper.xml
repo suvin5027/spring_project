@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.colar.spring_project.mapper.BookmarkMapper">
+
+	<!-- 즐겨찾기 여부 조회 -->
+	<select id="isBookmarked" resultType="int">
+		SELECT COUNT(*) FROM TB_BOARD_BOOKMARK
+		WHERE BOARD_SEQ = #{boardSeq} AND USER_SEQ = #{userSeq}
+	</select>
+
+	<!-- 즐겨찾기 등록 -->
+	<insert id="insert" parameterType="BookmarkDTO">
+		INSERT INTO TB_BOARD_BOOKMARK (BOARD_SEQ, USER_SEQ)
+		VALUES (#{boardSeq}, #{userSeq})
+	</insert>
+
+	<!-- 즐겨찾기 취소 -->
+	<delete id="delete">
+		DELETE FROM TB_BOARD_BOOKMARK
+		WHERE BOARD_SEQ = #{boardSeq} AND USER_SEQ = #{userSeq}
+	</delete>
+
+</mapper>
