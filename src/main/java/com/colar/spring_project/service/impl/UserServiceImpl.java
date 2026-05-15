@@ -1,5 +1,7 @@
 package com.colar.spring_project.service.impl;
 
+import java.util.List;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +58,23 @@ public class UserServiceImpl implements UserService {
 	public boolean resetPassword(UserDTO userDto) {
 		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		return userMapper.updatePasswordByIdAndEmail(userDto) > 0;
+	}
+
+	// 전체 유저 목록 조회 (관리자)
+	@Override
+	public List<UserDTO> getAdminUserList(UserDTO userDto) {
+		return userMapper.getAdminUserList(userDto);
+	}
+
+	// 역할 변경 (관리자)
+	@Override
+	public int updateUserRole(UserDTO userDto) {
+		return userMapper.updateUserRole(userDto);
+	}
+
+	// 유저 삭제 (관리자)
+	@Override
+	public int deleteUser(Long userSeq) {
+		return userMapper.deleteUser(userSeq);
 	}
 }

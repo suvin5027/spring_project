@@ -22,6 +22,9 @@
 		FROM TB_BOARD B
 		JOIN TB_USER U ON B.USER_SEQ = U.USER_SEQ
 		<where>
+			<if test="category != null and category != ''">
+				AND B.CATEGORY = #{category}
+			</if>
 			<if test="keyword != null and keyword != ''">
 				<choose>
 					<when test="searchType == 'title'">
