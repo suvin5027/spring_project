@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.colar.spring_project.dto.BoardDTO;
+import com.colar.spring_project.dto.ReportDTO;
 import com.colar.spring_project.dto.UserDTO;
 import com.colar.spring_project.service.BoardService;
+import com.colar.spring_project.service.ReportService;
 import com.colar.spring_project.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ public class AdminController {
 
 	private final UserService userService;
 	private final BoardService boardService;
+	private final ReportService reportService;
 
 	// 전체 유저 목록 조회 (검색 포함)
 	@GetMapping("/users")
@@ -57,6 +60,20 @@ public class AdminController {
 	@DeleteMapping("/boards/{boardSeq}")
 	public ResponseEntity<Void> deleteBoard(@PathVariable Long boardSeq) {
 		boardService.delete(boardSeq);
+		return ResponseEntity.ok().build();
+	}
+
+	// 신고 목록 조회 (status 필터 포함)
+	@GetMapping("/reports")
+	public ResponseEntity<List<ReportDTO>> getAdminReportList(ReportDTO reportDto) {
+		return ResponseEntity.ok(reportService.getAdminReportList(reportDto));
+	}
+
+	// 신고 처리 상태 변경
+	@PutMapping("/reports/{reportSeq}/status")
+	public ResponseEntity<Void> updateReportStatus(@PathVariable Long reportSeq, @RequestBody ReportDTO reportDto) {
+		reportDto.setReportSeq(reportSeq);
+		reportService.updateStatus(reportDto);
 		return ResponseEntity.ok().build();
 	}
 }
