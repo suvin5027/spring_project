@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService {
 		UserDTO found = userMapper.login(userDto);
 		if (found == null) return null;
 		if (!passwordEncoder.matches(userDto.getPassword(), found.getPassword())) return null;
+		userMapper.updateLastLoginAt(found.getUserSeq());
 		found.setPassword(null);
 		return found;
 	}

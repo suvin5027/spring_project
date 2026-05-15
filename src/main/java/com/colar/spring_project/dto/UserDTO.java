@@ -11,7 +11,8 @@ public class UserDTO {
 	private String email;		// 이메일
 	private String password;	// 비밀번호
 	private String userRole;	// 권한 (USER / ADMIN)
-	private String createdAt;	// 가입일 (관리자 목록 표시용)
+	private String createdAt;		// 가입일 (관리자 목록 표시용)
+	private String lastLoginAt;	// 마지막 접속 시간 (관리자 목록 표시용)
 
 	// 검색용 파라미터
 	private String keyword;		// 검색어 (아이디/이름/닉네임)

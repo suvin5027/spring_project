@@ -24,4 +24,6 @@ public interface UserMapper {
 	int updateUserRole(UserDTO userDto);
 	// 유저 삭제 (관리자)
 	int deleteUser(Long userSeq);
+	// 마지막 접속 시간 업데이트
+	int updateLastLoginAt(Long userSeq);
 }
